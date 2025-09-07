@@ -1,5 +1,4 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
-import { questionDemoDataLoading } from '../scripts/loadDemoData';
 
 export class SafeCreateTables1699000000001 implements MigrationInterface {
     name = 'SafeCreateTables1699000000001';

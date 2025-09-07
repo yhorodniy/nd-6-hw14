@@ -16,8 +16,8 @@ export class PostsService {
         this.categoryRepository = AppDataSource.getRepository(Category);
     }
 
-    private createSlug(title: string): string {
-        return title
+    private createSlug(header: string): string {
+        return header
             .toLowerCase()
             .replace(/['\"""'']/g, '')
             .replace(/[^a-zа-яё0-9\s-]/g, '')
@@ -40,15 +40,16 @@ export class PostsService {
     ): Promise<PaginatedResponse<PostType>> {
         try {
             const queryBuilder = this.postRepository.createQueryBuilder('post')
-                .leftJoinAndSelect('post.author', 'author');
+                .leftJoinAndSelect('post.author', 'author')
+                .where('post.deleted = :deleted', { deleted: false });
 
             if (userId) {
-                queryBuilder.where(
+                queryBuilder.andWhere(
                     '(post.isPublished = :published OR (post.isPublished = :unpublished AND post.authorId = :userId))',
                     { published: true, unpublished: false, userId }
                 );
             } else {
-                queryBuilder.where('post.isPublished = :published', { published: true });
+                queryBuilder.andWhere('post.isPublished = :published', { published: true });
             }
 
             if (category) {
@@ -68,7 +69,7 @@ export class PostsService {
 
             const data = posts.map(post => ({
                 id: post.id,
-                title: post.title,
+                header: post.header,
                 content: post.content,
                 excerpt: post.excerpt,
                 image: post.image,
@@ -86,7 +87,8 @@ export class PostsService {
                 reading_time: post.readingTime,
                 created_at: post.createdAt.toISOString(),
                 updated_at: post.updatedAt.toISOString(),
-                published_at: post.publishedAt?.toISOString()
+                published_at: post.publishedAt?.toISOString(),
+                deleted: post.deleted
             }));
 
             return {
@@ -106,7 +108,7 @@ export class PostsService {
     async getPostById(id: string, userId?: string): Promise<PostType> {
         try {
             const post = await this.postRepository.findOne({
-                where: { id },
+                where: { id, deleted: false },
                 relations: ['author']
             });
 
@@ -127,7 +129,7 @@ export class PostsService {
 
             return {
                 id: post.id,
-                title: post.title,
+                header: post.header,
                 content: post.content,
                 excerpt: post.excerpt,
                 image: post.image,
@@ -145,7 +147,8 @@ export class PostsService {
                 reading_time: post.readingTime,
                 created_at: post.createdAt.toISOString(),
                 updated_at: post.updatedAt.toISOString(),
-                published_at: post.publishedAt?.toISOString()
+                published_at: post.publishedAt?.toISOString(),
+                deleted: post.deleted
             };
         } catch (error: any) {
             throw new Error(`Failed to fetch post: ${error.message}`);
@@ -162,7 +165,7 @@ export class PostsService {
                 throw new Error('Author not found');
             }
 
-            const slug = this.createSlug(postData.title);
+            const slug = this.createSlug(postData.header);
             const readingTime = this.calculateReadingTime(postData.content);
             
             const post = this.postRepository.create({
@@ -187,7 +190,7 @@ export class PostsService {
 
             return {
                 id: savedPost.id,
-                title: savedPost.title,
+                header: savedPost.header,
                 content: savedPost.content,
                 excerpt: savedPost.excerpt,
                 image: savedPost.image,
@@ -216,7 +219,7 @@ export class PostsService {
         try {
             const existingPost = await this.postRepository.findOne({
                 where: { id },
-                select: ['id', 'authorId', 'title', 'content']
+                select: ['id', 'authorId', 'header', 'content']
             });
 
             if (!existingPost) {
@@ -229,8 +232,8 @@ export class PostsService {
 
             const updateData: Partial<Post> = { ...postData };
 
-            if (postData.title && postData.title !== existingPost.title) {
-                updateData.slug = this.createSlug(postData.title);
+            if (postData.header && postData.header !== existingPost.header) {
+                updateData.slug = this.createSlug(postData.header);
             }
 
             if (postData.content && postData.content !== existingPost.content) {
@@ -261,7 +264,7 @@ export class PostsService {
 
             return {
                 id: updatedPost.id,
-                title: updatedPost.title,
+                header: updatedPost.header,
                 content: updatedPost.content,
                 excerpt: updatedPost.excerpt,
                 image: updatedPost.image,
@@ -279,7 +282,8 @@ export class PostsService {
                 reading_time: updatedPost.readingTime,
                 created_at: updatedPost.createdAt.toISOString(),
                 updated_at: updatedPost.updatedAt.toISOString(),
-                published_at: updatedPost.publishedAt?.toISOString()
+                published_at: updatedPost.publishedAt?.toISOString(),
+                deleted: updatedPost.deleted
             };
         } catch (error: any) {
             throw new Error(`Failed to update post: ${error.message}`);

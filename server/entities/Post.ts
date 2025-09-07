@@ -7,7 +7,7 @@ export class Post {
     id!: string;
 
     @Column()
-    title!: string;
+    header!: string;
 
     @Column('text')
     content!: string;
@@ -63,4 +63,7 @@ export class Post {
 
     @Column({ name: 'published_at', nullable: true })
     publishedAt?: Date;
+
+    @Column({ default: false })
+    deleted!: boolean;
 }

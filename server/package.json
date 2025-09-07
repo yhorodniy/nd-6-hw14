@@ -1,5 +1,5 @@
 {
-  "name": "nd-6-hw5",
+  "name": "nd-6-hw14",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
@@ -13,7 +13,7 @@
     "schema:sync": "npm run typeorm schema:sync -- -d ormconfig.ts",
     "schema:drop": "npm run typeorm schema:drop -- -d ormconfig.ts",
     "db:safe-setup": "ts-node scripts/resetDatabase.ts",
-    "load:demo-data": "ts-node scripts/loadDemoData.ts",
+    "seed:database": "ts-node scripts/seedDatabase.ts",
     "post:insert": "ts-node scripts/posts/insert.ts",
     "post:all": "ts-node scripts/posts/getAll.ts",
     "post:id": "ts-node scripts/posts/getById.ts",
@@ -29,17 +29,18 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/yhorodniy/nd-6-hw5.git"
+    "url": "git+https://github.com/yhorodniy/nd-6-hw14.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/yhorodniy/nd-6-hw5/issues"
+    "url": "https://github.com/yhorodniy/nd-6-hw14/issues"
   },
-  "homepage": "https://github.com/yhorodniy/nd-6-hw5#readme",
+  "homepage": "https://github.com/yhorodniy/nd-6-hw14#readme",
   "description": "",
   "devDependencies": {
+    "@faker-js/faker": "^10.0.0",
     "@types/bcrypt": "^6.0.0",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.3",
@@ -60,6 +61,7 @@
     "express": "^5.1.0",
     "fastest-validator": "^1.19.1",
     "jsonwebtoken": "^9.0.2",
+    "nd-6-hw14": "file:..",
     "pg": "^8.16.3",
     "reflect-metadata": "^0.1.13",
     "typeorm": "^0.3.17",

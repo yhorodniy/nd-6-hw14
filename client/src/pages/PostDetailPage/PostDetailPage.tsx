@@ -100,7 +100,7 @@ const PostDetailPage: React.FC = () => {
                             <span className="post-detail__featured">⭐ Featured</span>
                         )}
                     </div>
-                    <h1 className="post-detail__title">{post.title}</h1>
+                    <h1 className="post-detail__title">{post.header}</h1>
                     {post.excerpt && (
                         <div className="post-detail__excerpt">{post.excerpt}</div>
                     )}

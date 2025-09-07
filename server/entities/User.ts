@@ -19,4 +19,7 @@ export class User {
 
     @UpdateDateColumn({ name: 'updated_at' })
     updatedAt!: Date;
+
+    @Column({ default: false })
+    deleted!: boolean;
 }

@@ -10,7 +10,7 @@ import Error from '../../components/Error/Error';
 import { useAuth } from '../../contexts/AuthContext';
 
 interface FormValues {
-    title: string;
+    header: string; // renamed from title
     content: string;
     excerpt?: string;
     category: string;
@@ -19,10 +19,10 @@ interface FormValues {
 }
 
 const validationSchema = Yup.object({
-    title: Yup.string()
-        .required('The title is required')
-        .min(1, 'The title must be at least 1 character long')
-        .max(255, 'The title cannot exceed 255 characters'),
+    header: Yup.string() // renamed from title
+        .required('The header is required')
+        .min(1, 'The header must be at least 1 character long')
+        .max(255, 'The header cannot exceed 255 characters'),
     content: Yup.string()
         .required('The content is required')
         .min(1, 'The content must be at least 1 character long'),
@@ -70,7 +70,7 @@ const PostFormPage: React.FC = () => {
             if (isEditMode && id) {
                 
                 const updateData: PostUpdateRequest = {};
-                if (values.title !== post?.title) updateData.title = values.title;
+                if (values.header !== post?.header) updateData.header = values.header;
                 if (values.content !== post?.content) updateData.content = values.content;
                 if (values.excerpt !== post?.excerpt) updateData.excerpt = values.excerpt;
                 if (values.category !== post?.category) updateData.category = values.category;
@@ -80,7 +80,7 @@ const PostFormPage: React.FC = () => {
                 await newsAPI.updatePost(id, updateData);
             } else {
                 const createData: PostCreateRequest = {
-                    title: values.title,
+                    header: values.header,
                     content: values.content,
                     excerpt: values.excerpt,
                     category: values.category,
@@ -100,7 +100,7 @@ const PostFormPage: React.FC = () => {
     };
 
     const initialValues: FormValues = {
-        title: post?.title || '',
+        header: post?.header || '',
         content: post?.content || '',
         excerpt: post?.excerpt || '',
         category: post?.category || '',
@@ -131,18 +131,18 @@ const PostFormPage: React.FC = () => {
                     {({ isSubmitting }) => (
                         <Form className="post-form">
                             <div className="form-group">
-                                <label htmlFor="title" className="form-label">
-                                    Post Title *
+                                <label htmlFor="header" className="form-label">
+                                    Post Header *
                                 </label>
                                 <Field
                                     type="text"
-                                    id="title"
-                                    name="title"
+                                    id="header"
+                                    name="header"
                                     className="form-input"
-                                    placeholder="Enter post title"
+                                    placeholder="Enter post header"
                                 />
                                 <ErrorMessage 
-                                    name="title" 
+                                    name="header" 
                                     component="div" 
                                     className="form-error" 
                                 />

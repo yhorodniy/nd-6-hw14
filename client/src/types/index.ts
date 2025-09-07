@@ -1,6 +1,6 @@
 export interface Post {
     id: string;
-    title: string;
+    header: string; // renamed from title
     content: string;
     excerpt?: string;
     image?: string;
@@ -19,10 +19,11 @@ export interface Post {
     created_at: string;
     updated_at: string;
     published_at?: string;
+    deleted?: boolean; // new field
 }
 
 export interface PostCreateRequest {
-    title: string;
+    header: string; // renamed from title
     content: string;
     excerpt?: string;
     image?: string;
@@ -35,7 +36,7 @@ export interface PostCreateRequest {
 }
 
 export interface PostUpdateRequest {
-    title?: string;
+    header?: string; // renamed from title
     content?: string;
     excerpt?: string;
     image?: string;

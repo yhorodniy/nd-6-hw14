@@ -16,6 +16,6 @@ export default new DataSource({
     synchronize: false,
     logging: true,
     entities: [User, Post, Category],
-    migrations: ['typeorm-migrations/*.ts'],
+    migrations: ['migrations/*.ts'],
     subscribers: ['subscribers/*.ts'],
 });

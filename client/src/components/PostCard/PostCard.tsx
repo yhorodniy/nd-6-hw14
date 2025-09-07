@@ -26,7 +26,7 @@ const PostCard: React.FC<{ post: Post }> = ({ post }) => {
                         <span className="post-card__featured">⭐ Featured</span>
                     )}
                 </div>
-                <h3 className="post-card__title">{post.title}</h3>
+                <h3 className="post-card__title">{post.header}</h3>
                 <p className="post-card__text">
                     {post.excerpt || post.content.substring(0, 150) + '...'}
                 </p>

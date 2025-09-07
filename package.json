@@ -1,5 +1,5 @@
 {
-  "name": "nd-6-hw13",
+  "name": "nd-6-hw14",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
@@ -15,7 +15,7 @@
     "typeorm:schema:drop": "npm --prefix ./server run schema:drop",
     
     "db:safe-setup": "npm --prefix ./server run db:safe-setup",
-    "load:demo-data": "npm --prefix ./server run load:demo-data",
+    "load:demo-data": "npm --prefix ./server run seed:database",
     
     "prod:client": "npm run deps:client && npm run build:client",
     "prod:server": "npm run deps:server && npm run build:server",
@@ -28,14 +28,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/yhorodniy/nd-6-hw13.git"
+    "url": "git+https://github.com/yhorodniy/nd-6-hw14.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/yhorodniy/nd-6-hw13/issues"
+    "url": "https://github.com/yhorodniy/nd-6-hw14/issues"
   },
-  "homepage": "https://github.com/yhorodniy/nd-6-hw13#readme",
+  "homepage": "https://github.com/yhorodniy/nd-6-hw14#readme",
   "description": ""
 }
